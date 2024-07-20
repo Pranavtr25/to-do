@@ -15,7 +15,6 @@ function ToDoList(){
     const [search,setSearch] = useState(false)
     const [editValue,setEditValue] = useState("")
     const [editIndex, setEditIndex] = useState(null)
-    // const [isModalOpen, setIsModalOpen] = useState(false)
 
     function updateNewList(e){
         const value = e.target.value
@@ -55,10 +54,14 @@ function ToDoList(){
     function saveEdit(index){
         let updatedList = [...list]
         updatedList[index] = editValue
-        setList(updatedList)
-        localStorage.setItem("items", JSON.stringify(updatedList))
-        setEditIndex(null)
-        setEditValue('')
+        if(editValue.trim() == ""){
+            return toast.error('empty list cannot be saved')
+        }else{
+            setList(updatedList)
+            localStorage.setItem("items", JSON.stringify(updatedList))
+            setEditIndex(null)
+            setEditValue('')
+        }
     }
 
     function removeList(i){
