@@ -18,7 +18,6 @@ function ToDoList(){
     // const [isModalOpen, setIsModalOpen] = useState(false)
 
     function updateNewList(e){
-        console.log(`newList : ${newList}`)
         const value = e.target.value
         setNewList(value)
         if(!value){
@@ -26,17 +25,23 @@ function ToDoList(){
         }
     }
 
+    function isListAlreadyExist(value){
+        return list.includes(value)
+    }
+
 
     function addList(){
         if(newList.trim() !== ""){
-            console.log("workingg")
-            const updatedList = [...list,newList]
-            setList(updatedList)
-            localStorage.setItem("items",JSON.stringify(updatedList))
-            setNewList("")
-            toast.success('Successfully Added')
+            if(isListAlreadyExist(newList)){
+                toast.error('List already exist')
+            } else{
+                const updatedList = [...list,newList]
+                setList(updatedList)
+                localStorage.setItem("items",JSON.stringify(updatedList))
+                setNewList("")
+                toast.success('Successfully Added')
+            }
         }else{
-            console.log("error")
             toast.error('empty list cannot be added')
         }
     }
